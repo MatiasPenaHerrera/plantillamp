@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Download, Plus, Trash2, Printer } from 'lucide-react';
 import logo from "./assets/logo.png";
 
@@ -9,7 +9,7 @@ export default function PlantillaCotizacion() {
     cliente: {
       nombre: 'Paulina Mujica',
       direccion: 'Eduardo Frei Montalva 7050, bodega n7',
-      telefono: '+56 9 5058 8170',
+      rut: '12.345.678-9',
       asunto: '100 toldos estampados y 100 mesas'
     },
     items: [
@@ -18,7 +18,6 @@ export default function PlantillaCotizacion() {
       { codigo: 'L6Q1R8F3', descripcion: 'Mesa plegable rectangular tipo maleta 180cm blanco', cantidad: 100, precioUnitario: 5000 }
     ],
     condiciones: {
-      solicitadoPor: 'Paulina Mujica',
       formaPago: 'Transferencia',
       despacho: 'Despacho a coordinar'
     },
@@ -75,7 +74,7 @@ export default function PlantillaCotizacion() {
     csv += `Fecha: ${cotizacion.fecha}\n\n`;
     csv += 'INFORMACIÓN DEL CLIENTE\n';
     csv += `Cliente:,${cotizacion.cliente.nombre}\n`;
-    csv += `Teléfono:,${cotizacion.cliente.telefono}\n`;
+    csv += `RUT:,${cotizacion.cliente.rut}\n`;
     csv += `Dirección:,${cotizacion.cliente.direccion}\n`;
     csv += `Asunto:,${cotizacion.cliente.asunto}\n\n`;
     csv += 'PRODUCTOS Y SERVICIOS\n';
@@ -87,7 +86,6 @@ export default function PlantillaCotizacion() {
     csv += `IVA (19%):,,,,${calcularIVA()}\n`;
     csv += `TOTAL:,,,,${calcularTotal()}\n\n`;
     csv += 'CONDICIONES\n';
-    csv += `Solicitado por:,${cotizacion.condiciones.solicitadoPor}\n`;
     csv += `Forma de Pago:,${cotizacion.condiciones.formaPago}\n`;
     csv += `Despacho:,${cotizacion.condiciones.despacho}\n`;
     csv += `Validez:,${cotizacion.validez} días\n`;
@@ -180,12 +178,13 @@ export default function PlantillaCotizacion() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-600 block mb-1">Teléfono</label>
+                  <label className="text-xs text-gray-600 block mb-1">RUT</label>
                   <input
                     type="text"
-                    value={cotizacion.cliente.telefono}
-                    onChange={(e) => actualizarCliente('telefono', e.target.value)}
+                    value={cotizacion.cliente.rut}
+                    onChange={(e) => actualizarCliente('rut', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="12.345.678-9"
                   />
                 </div>
                 <div className="col-span-2">
@@ -305,21 +304,7 @@ export default function PlantillaCotizacion() {
             </div>
 
             {/* Condiciones */}
-            <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
-                <label className="text-xs text-blue-600 font-semibold uppercase block mb-2">
-                  Solicitado por
-                </label>
-                <input
-                  type="text"
-                  value={cotizacion.condiciones.solicitadoPor}
-                  onChange={(e) => setCotizacion({
-                    ...cotizacion,
-                    condiciones: { ...cotizacion.condiciones, solicitadoPor: e.target.value }
-                  })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
+            <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="bg-gray-50 p-4 rounded border-l-4 border-blue-500">
                 <label className="text-xs text-blue-600 font-semibold uppercase block mb-2">
                   Forma de Pago
@@ -388,6 +373,7 @@ export default function PlantillaCotizacion() {
             <div className="text-center text-sm text-gray-600">
               <p className="font-semibold mb-1">Cualquier consulta sobre esta cotización:</p>
               <p>📧 gestionesyserviciosmp@gmail.com | 📱 +56 9 6445 9168</p>
+              <p className="mt-2">🌐 <a href="https://gestionesyserviciosmp.cl/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">www.gestionesyserviciosmp.cl</a></p>
             </div>
           </div>
         </div>
